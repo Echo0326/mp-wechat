@@ -4,6 +4,9 @@
 		<view>
 			<text class="title" @click="go">{{title}}</text>
 		</view>
+		<view>
+
+		</view>
 	</view>
 </template>
 
@@ -18,7 +21,13 @@
 
 		},
 		methods: {
-
+      go(){
+        uni.chooseImage({
+          success:(temp)=>{
+            console.log(temp)
+					}
+				})
+			}
 		}
 	}
 </script>

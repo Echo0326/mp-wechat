@@ -45,13 +45,14 @@ function request(url="", method="GET", data={},isLoading=false ) {
   })
 }
 //上传文件
-function uploadFile(url="",filePath=[],data={},isLoading=false){
-    let i=0
-    if (isLoading){
-      uni.showLoading({title:'努力加载中'})
-    }
+function uploadFile(url="",filePath=[],data={}){
+  let i=0
+  if (i===0){
+    uni.showLoading({title:'信息上传中'})
+  }
+  function fn() {
     data=Object.assign({},getAuth(),data)
-    promise=uni.uploadFile({
+    uni.uploadFile({
       url:BASE_API_URL+url,
       method:'POST',
       header:{
@@ -61,31 +62,21 @@ function uploadFile(url="",filePath=[],data={},isLoading=false){
       name:'file',
       formData:data,
       success:()=>{
-
+        i++
+        if (i===filePath.length){
+          uni.hideLoading()
+          layerMsg('信息上传成功')
+        } else {
+          fn()
+        }
       },
-      complete:()=>{
-
-      },
+      fail:()=>{
+        uni.hideLoading()
+        layerMsg(`第${i}个文件上传失败`)
+      }
     })
-    // promise.then(res => {
-    //   uni.hideLoading()
-    //   if(res[0]){
-    //     layerMsg('请求出错，请稍后再试！')
-    //     reject(res[0])
-    //   }else if(res[1].data.code===100){
-    //     resolve(res[1].data)
-    //   }else if(res[1].data.msg){
-    //     layerMsg(res[1].data.msg)
-    //     reject(res[1])
-    //   }else{
-    //     layerMsg('请求出错，请稍后再试！')
-    //     reject(res)
-    //   }
-    // }).catch(error => {
-    //   uni.hideLoading()
-    //   layerMsg('请求出错，请稍后再试！')
-    //   reject(error)
-    // })
+  }
+  fn()
 }
 //get请求
 function get(url,isLoading=false) {
