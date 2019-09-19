@@ -2,7 +2,7 @@
 	<view class="content">
 		<image class="logo" src="/static/logo.png"></image>
 		<view>
-			<text class="title" @click="go">{{title}}</text>
+			<button open-type="getUserInfo" @getuserinfo="getUserInfo">获取授权信息</button>
 		</view>
 		<view>
 
@@ -14,38 +14,42 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				title: 'Hello',
+				imgs:[],
+				videos:[]
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
-      go(){
-        uni.chooseImage({
-          success:(temp)=>{
-            console.log(temp)
-					}
-				})
+      getUserInfo(info){
+        console.log(info)
 			}
 		}
 	}
 </script>
 
-<style>
+<style scoped lang="less">
 	.content {
 		text-align: center;
-		height: 400upx;
+		height: 400rpx;
 	}
 
 	.logo {
-		height: 200upx;
-		width: 200upx;
-		margin-top: 200upx;
+		height: 200rpx;
+		width: 200rpx;
+		margin-top: 200rpx;
 	}
 
 	.title {
-		font-size: 36upx;
+		font-size: 36rpx;
 		color: #8f8f94;
+	}
+	.img{
+		image{
+			width: 400rpx;
+			height: 400rpx;
+		}
 	}
 </style>

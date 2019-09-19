@@ -1,6 +1,17 @@
 <script>
 	export default {
-		onLaunch: function() {
+    onLaunch: function() {
+      uni.getSetting({
+        success(res){
+          if (res.authSetting['scope.userInfo']){
+            uni.getUserInfo({
+              success(info){
+                console.log('info====',info)
+              }
+            })
+          }
+        }
+      })
 			console.log('App Launch')
 		},
 		onShow: function() {
